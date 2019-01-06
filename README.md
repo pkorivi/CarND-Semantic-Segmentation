@@ -2,6 +2,36 @@
 ### Introduction
 In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN).
 
+
+### Solution
+
+Does the project load the pretrained vgg model?
+Does the project learn the correct features from the images?
+Does the project optimize the neural network?
+
+Does the project train the neural network?
+
+Does the project train the model correctly?
+
+Does the project use reasonable hyperparameters?
+
+Does the project correctly label the road?
+
+
+The project is implemented based on the guidelines of the instructions from class room. Initially a pre trained vgg model is loaded, then it is modified to add the decoding layers(convolve transpose) and skip connection layers to create a fully convoluted network. Here initializing the kernel made a significant diference in improving the accuracy along with the addition of regulaizer. The network is trained using an adam optimizer which optimises the cross entropy function. A training function 'train_nn' is implemented which trains the neural net over given number of epochs with given batch size and optimizer.
+
+All of these are consolidated into a run function which calls the functions to load model, gather optimization information and train the model with the dataset. The model trains correctly with a loss function thats decreasing over epochs and reaches arounf 0.015. Number of epochs is kept at 25 and batch size at 8. From experiments 20-25 epochs gained good results. 
+
+The final model labels the road pixels fairly accurately, some of the samples are as below
+
+![alt text](https://github.com/pkorivi/CarND-Semantic-Segmentation/blob/master/examples/um_000006.png)
+![alt text](https://github.com/pkorivi/CarND-Semantic-Segmentation/blob/master/examples/um_000032.png)
+![alt text](https://github.com/pkorivi/CarND-Semantic-Segmentation/blob/master/examples/umm_000009.png)
+![alt text](https://github.com/pkorivi/CarND-Semantic-Segmentation/blob/master/examples/umm_000093.png)
+![alt text](https://github.com/pkorivi/CarND-Semantic-Segmentation/blob/master/examples/uu_000017.png)
+
+
+
 ### Setup
 ##### GPU
 `main.py` will check to make sure you are using GPU - if you don't have a GPU on your system, you can use AWS or another cloud computing platform.
