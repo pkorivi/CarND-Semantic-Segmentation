@@ -120,6 +120,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
 
     print("Training")
     for u in range(epochs):
+        print("Epochs: ",u)
         for image,label in get_batches_fn(batch_size):
             _,loss = sess.run([train_op,cross_entropy_loss],
                                feed_dict={input_image: image,
@@ -135,7 +136,7 @@ tests.test_train_nn(train_nn)
 def run():
     num_classes = 2
     image_shape = (160, 576)  # KITTI dataset uses 160x576 images
-    data_dir = './data'
+    data_dir = '/data'
     runs_dir = './runs'
     tests.test_for_kitti_dataset(data_dir)
 
@@ -160,7 +161,7 @@ def run():
 
         # TODO: Build NN using load_vgg, layers, and optimize function
         
-        input_image, keep, layer3, layer4, layer7 = load_vgg(sess,vgg_path)
+        input_image, keep_prob, layer3, layer4, layer7 = load_vgg(sess,vgg_path)
         fcn_ = layers(layer3, layer4, layer7, num_classes)
         logits, train_op, cross_entropy_loss = optimize(fcn_, correct_label, learning_rate, num_classes)
 
