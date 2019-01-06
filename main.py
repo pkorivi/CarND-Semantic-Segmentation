@@ -68,14 +68,20 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    conv_1x1 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    tconv_l1 = tf.layers.conv2d_transpose(conv_1x1,num_classes,4,2,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    vgg_conv_l4_add = tf.layers.conv2d(vgg_layer4_out, num_classes,1,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same',
+                                kernel_initializer= tf.random_normal_initializer(stddev=0.01),kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REGULARIZER))
+    tconv_l1 = tf.layers.conv2d_transpose(conv_1x1,num_classes,4,2,padding='same',
+                                          kernel_initializer= tf.random_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REGULARIZER))
+    vgg_conv_l4_add = tf.layers.conv2d(vgg_layer4_out, num_classes,1,padding='same',
+                                        kernel_initializer= tf.random_normal_initializer(stddev=0.01),kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REGULARIZER))
     skip1 = tf.add(tconv_l1,vgg_conv_l4_add)
-    tconv_l2 = tf.layers.conv2d_transpose(skip1,num_classes,4,2,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    vgg_conv_l3_add = tf.layers.conv2d(vgg_layer3_out, num_classes,1,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    tconv_l2 = tf.layers.conv2d_transpose(skip1,num_classes,4,2,padding='same',
+                                          kernel_initializer= tf.random_normal_initializer(stddev=0.01),kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REGULARIZER))
+    vgg_conv_l3_add = tf.layers.conv2d(vgg_layer3_out, num_classes,1,padding='same',
+                                         kernel_initializer= tf.random_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REGULARIZER))
     skip2 = tf.add(tconv_l2,vgg_conv_l3_add)
-    output = tf.layers.conv2d_transpose(skip2,num_classes,16,8,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output = tf.layers.conv2d_transpose(skip2,num_classes,16,8,padding='same',
+                                        kernel_initializer= tf.random_normal_initializer(stddev=0.01),kernel_regularizer=tf.contrib.layers.l2_regularizer(L2_REGULARIZER))
 
     return output
 tests.test_layers(layers)
